@@ -23,7 +23,6 @@ function Header() {
                 <Link to={'/profile'}>
                     <Button>Submit Listing</Button>
                 </Link>
-                
             </div>
             :
             <Button>Submit Listing</Button>
