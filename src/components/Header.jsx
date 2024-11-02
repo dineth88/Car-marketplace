@@ -1,5 +1,5 @@
 import React from 'react'
-import {useUser, UserButton} from '@clerk/clerk-react';
+import {useUser, UserButton, SignedOut, SignIn} from '@clerk/clerk-react';
 import { Button } from './ui/button';
 import { Link } from 'react-router-dom';
 
@@ -21,11 +21,15 @@ function Header() {
             <div className="flex items-center gap-5">
                 <UserButton />
                 <Link to={'/profile'}>
-                    <Button>Submit Listing</Button>
+                <Button>Submit Listing</Button>
                 </Link>
             </div>
             :
-            <Button>Submit Listing</Button>
+            <div className="flex items-center gap-5">
+                <Link to={'/signin'}>
+                    <Button clas>Sign In</Button>
+                </Link>            
+            </div>
         }
 
     </div>

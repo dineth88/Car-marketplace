@@ -14,7 +14,7 @@ import UploadImages from './components/UploadImages';
 import { BiLoaderAlt } from "react-icons/bi";
 import { Toaster } from './../components/ui/sonner';
 import { useNavigate } from 'react-router-dom';
-
+import moment from 'moment'
 
 function AddListing() {
     // State to hold form data
@@ -23,6 +23,7 @@ function AddListing() {
     const [triggerUploadImages, setTriggerUploadImages] = useState();
     const [loader, setLoader] = useState(false);
     const navigate = useNavigate();
+    const {user} = useUser();
 
     // Function to handle input from form
     const handleInputChange = (name, value) => {
@@ -51,8 +52,10 @@ function AddListing() {
             // Attempt to insert the data into the database
             const result = await db.insert(CarListing).values({
                 ...formData,
-                features:featuresData
-            }).returning({id:CarListing.id});
+                features:featuresData,
+                createdBy:user?.primaryEmailAddress?.emailAddress,
+                postedOn:moment().format('DD/MM/yyyy')
+            },).returning({id:CarListing.id});
             if (result) {
                 console.log("Data Saved");
                 setTriggerUploadImages(result[0]?.id);

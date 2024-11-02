@@ -1,4 +1,5 @@
-import axios from "axios";
+//import axios from "axios";
+//const CarImages = require("configs/schema");
 
 const SendBirdApplicationId=import.meta.env.VITE_SENDBIRD_APP_ID;
 const SendBirdApiToken=import.meta.env.VITE_SENDBIRD_API_TOKEN;
@@ -6,11 +7,11 @@ const FormatResult=(resp)=>{
     let result=[];
     let finalResult=[];
     resp.forEach((item)=>{
-        const listingId=item.carLisiting?.id;
+        const listingId=item.carListing?.id;
         if(!result[listingId])
         {
             result[listingId]={
-                car:item.carLisiting,
+                car:item.carListing,
                 images:[]
             }
         }

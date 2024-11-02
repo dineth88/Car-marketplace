@@ -8,11 +8,16 @@ import {ClerkProvider} from '@clerk/clerk-react';
 import Profile from './profile/index'
 import AddListing from './add-listing/index'
 import { Toaster } from './components/ui/sonner'
+import SignInTo from './components/signin/SignInTo'
 
 const router = createBrowserRouter([
   {
     path:'/',
     element:<Home/>
+  },
+  {
+    path:'/signin',
+    element:<SignInTo/>
   },
   {
     path:'/contact',
