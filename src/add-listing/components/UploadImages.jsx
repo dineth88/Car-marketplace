@@ -5,9 +5,22 @@ import React, { useEffect, useState } from 'react'
 import { IoIosCloseCircle } from "react-icons/io";
 import { CarImages } from './../../../configs/schema';
 import { db } from './../../../configs';
+import { eq } from 'drizzle-orm';
 
-function UploadImages({triggerUploadImages, setLoader}) {
+function UploadImages({triggerUploadImages, setLoader, carInfo,mode}) {
     const [selectedFilelist, setselectedFilelist] = useState([]);
+    const [editCarImageList, setEditCarImageList] = useState([]);
+
+    useEffect(()=>{
+        if(mode=='edit'){
+            setEditCarImageList([]);
+            carInfo?.images.forEach((image)=>{
+                setEditCarImageList(prev=>[...prev, image?.imageUrl])
+                //console.log(image);
+            })
+        }
+    }, [carInfo])
+
     useEffect(()=>{
         if(triggerUploadImages){
             UploadImageToServer();
@@ -53,11 +66,26 @@ function UploadImages({triggerUploadImages, setLoader}) {
         })
     }
 
+    const onImageRemoveFromDB=async(image, index)=>{
+        const result = await db.delete(CarImages).where(eq(CarImages.id, carInfo.images[index].id)).returning({id:CarImages.id});
+        const imageList = editCarImageList.filter(item=>item!=image);
+        setEditCarImageList(imageList);
+    }
+
   return (
     <div>
         <h2 className="font-mdeuim my-3 text-xl">Upload Car Images</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-5">
             
+            {mode=='edit'&&
+                editCarImageList.map((image, index)=>(
+                    <div key={index}>
+                       <IoIosCloseCircle className='absolute m-2 text-lg text-white' onClick={()=>onImageRemoveFromDB(image, index)}/>
+                        <img src={image} className="w-full h-[130px] object-cover rounded-xl"/>
+                    </div>
+            ))}
+            
+
             {selectedFilelist.map((image, index)=>(
                 <div key={index}>
                    <IoIosCloseCircle className='absolute m-2 text-lg text-white' onClick={()=>onImageRemove(image, index)}/>
