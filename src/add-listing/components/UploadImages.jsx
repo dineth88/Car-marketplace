@@ -15,7 +15,7 @@ function UploadImages({triggerUploadImages, setLoader, carInfo,mode}) {
         if(mode=='edit'){
             setEditCarImageList([]);
             carInfo?.images.forEach((image)=>{
-                setEditCarImageList(prev=>[...prev, image?.imageUrl])
+                setEditCarImageList(prev=>[...prev, image?.imageUrl]);
                 //console.log(image);
             })
         }
@@ -67,7 +67,7 @@ function UploadImages({triggerUploadImages, setLoader, carInfo,mode}) {
     }
 
     const onImageRemoveFromDB=async(image, index)=>{
-        const result = await db.delete(CarImages).where(eq(CarImages.id, carInfo.images[index].id)).returning({id:CarImages.id});
+        const result = await db.delete(CarImages).where(eq(CarImages.id, carInfo?.images[index]?.id)).returning({id:CarImages.id});
         const imageList = editCarImageList.filter(item=>item!=image);
         setEditCarImageList(imageList);
     }
