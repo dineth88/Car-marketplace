@@ -9,7 +9,7 @@ function Header() {
   return (
     <div className="flex justify-between items-center shadow-sm p-5">
         <Link to={'/'}>
-            <img src="./logo.svg" alt="logo" width={150} height={100}/>
+            <img src="./../../logo.svg" alt="logo" width={150} height={100}/>
         </Link>
 
         <ul className="hidden md:flex gap-16">
